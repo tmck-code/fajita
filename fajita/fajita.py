@@ -105,10 +105,10 @@ class Fajita(object):
             elif method == "POST":
                 res = self._post(uri, **kwargs)
             items = parse_items(res)
+            if done_fn(items, res, total=total, **kwargs):
+                return
             if items:
                 total += len(items)
                 yield items
-            if done_fn(items, res, total=total, **kwargs):
-                return
             kwargs = next_page_fn(**kwargs)
 
