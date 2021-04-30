@@ -94,9 +94,10 @@ class Fajita(object):
         )
 
     def _scroll_yield(
-        self, uri, method, parse_items, next_page_fn, done_fn, items=[], **kwargs
+        self, uri, method, parse_items, next_page_fn, done_fn, **kwargs
     ):
         total = 0
+        items = []
         while True:
             res = None
             if method == "GET":
@@ -109,5 +110,5 @@ class Fajita(object):
                 yield items
             if done_fn(items, res, total=total, **kwargs):
                 return
-            new_kwargs = next_page_fn(**kwargs)
+            kwargs = next_page_fn(**kwargs)
 
